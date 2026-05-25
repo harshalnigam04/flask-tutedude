@@ -30,6 +30,10 @@
         <input type="text" id="itemUuid" name="itemUuid" placeholder="e.g. 550e8400-e29b-41d4-a716-446655440000" readonly>
         <button type="button" onclick="generateUUID()">Generate UUID</button>
 
+        <label for="itemHash">Item Hash:</label>
+        <input type="text" id="itemHash" name="itemHash" placeholder="SHA-256 hash will appear here" readonly>
+        <button type="button" onclick="generateHash()">Generate Hash</button>
+
         <button type="button" id="submitBtn" onclick="submitTodo()">Submit</button>
     </form>
     <div id="response" style="margin-top:20px;color:green;"></div>
@@ -41,12 +45,21 @@
             });
             document.getElementById('itemUuid').value = uuid;
         }
+        async function generateHash() {
+            const name = document.getElementById('itemName').value;
+            const desc = document.getElementById('itemDescription').value;
+            const msgBuffer = new TextEncoder().encode(name + desc);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            document.getElementById('itemHash').value = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
         async function submitTodo() {
             const payload = {
                 itemName: document.getElementById('itemName').value,
                 itemDescription: document.getElementById('itemDescription').value,
                 itemId: document.getElementById('itemId').value,
-                itemUuid: document.getElementById('itemUuid').value
+                itemUuid: document.getElementById('itemUuid').value,
+                itemHash: document.getElementById('itemHash').value
             };
             const res = await fetch('/submittodoitem', {
                 method: 'POST',
