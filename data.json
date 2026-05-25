@@ -1,6 +1,6 @@
 {
-    "project": "Tutedude Flask Project",
-    "version": "1.0.0",
+    "project": "Tutedude Flask Project - Main",
+    "version": "1.5.0",
     "author": "harshalnigam04",
-    "description": "A Flask project with REST API"
+    "description": "Main branch version"
 }
