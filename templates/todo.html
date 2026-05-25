@@ -2,14 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        h1 { color: #333; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { margin-top: 20px; padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #45a049; }
+    </style>
 </head>
 <body>
     <h1>To-Do List</h1>
-    <form action="/submittodoitem" method="POST" id="todoForm">
-        <label>Item Name: <input type="text" name="itemName" required></label><br><br>
-        <label>Item Description: <textarea name="itemDescription" required></textarea></label><br><br>
-        <button type="submit">Submit</button>
+    <form id="todoForm">
+        <label for="itemName">Item Name:</label>
+        <input type="text" id="itemName" name="itemName" placeholder="Enter item name" required>
+
+        <label for="itemDescription">Item Description:</label>
+        <textarea id="itemDescription" name="itemDescription" rows="4" placeholder="Enter item description" required></textarea>
+
+        <button type="button" onclick="submitTodo()">Submit</button>
     </form>
+
+    <div id="response" style="margin-top:20px;color:green;"></div>
+
+    <script>
+        async function submitTodo() {
+            const itemName = document.getElementById('itemName').value;
+            const itemDescription = document.getElementById('itemDescription').value;
+            const res = await fetch('/submittodoitem', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ itemName, itemDescription })
+            });
+            const data = await res.json();
+            document.getElementById('response').innerText = data.message || JSON.stringify(data);
+        }
+    </script>
 </body>
 </html>

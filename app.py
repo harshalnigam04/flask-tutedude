@@ -34,5 +34,10 @@ def submit_todo_item():
     result = db.todos.insert_one(todo_item)
     return jsonify({"message": "Todo item stored successfully", "id": str(result.inserted_id)}), 201
 
+
+@app.route("/todo")
+def todo():
+    return render_template("todo.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
