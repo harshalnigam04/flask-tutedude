@@ -1,6 +1,12 @@
 {
     "project": "Tutedude Flask Project",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "author": "harshalnigam04",
-    "description": "A Flask project with REST API"
+    "description": "Updated REST API with enhanced features",
+    "endpoints": [
+        {"path": "/", "method": "GET", "description": "Home page"},
+        {"path": "/api", "method": "GET", "description": "Returns project info"},
+        {"path": "/submittodoitem", "method": "POST", "description": "Submit a todo item"}
+    ],
+    "updated_at": "2025-05-25"
 }
